@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,9 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/dashboard', function(){
-    return view('welcome');
-})->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::get('/', [HomeController::class, 'login'])->name('home');
 Route::post('/', [HomeController::class, 'processLogin']);
+
+Route::post('/logout', [HomeController::class, 'logout'])->name('logout');

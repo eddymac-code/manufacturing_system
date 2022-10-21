@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginFormRequest;
 use Illuminate\Http\Request;
-use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
     public function __construct()
     {
-        if (Sentinel::check()) {
+        //check whether a user is logged in and redirect to dashboard if so.
+        if (Auth::check()) {
             return redirect('dashboard')->send();
         }
     }
@@ -33,22 +34,35 @@ class HomeController extends Controller
             ];
 
             if (!empty($request->remember)) {
-                if (Sentinel::authenticateAndRemember($credentials)) {
-                    return redirect()->route('dashboard');
+                if (Auth::attempt($credentials, $request->remember)) {
+                    $request->session()->regenerate();
+
+                    return redirect()->intended('dashboard');
                 } else {
                     return back()->withInput()->withErrors('Invalid Credentials');
                 }
             } else {
-                if (Sentinel::authenticate($credentials)) {
-                    return redirect()->route('dashboard');
+                if (Auth::attempt($credentials)) {
+                    $request->session()->regenerate();
+
+                    return redirect()->intended('dashboard');
                 } else {
-                    return back()->withInput()->withErrors('Invalid Credentials');
-                }
-                
-            }
-            
+                    return back()->withErrors([
+                        'email' => 'Provided credentials don\'t match our records.'
+                    ])->onlyInput('email');
+                }                
+            }            
         }
+    }
 
+    public function logout(Request $request)
+    {
+        Auth::logout();
 
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+    
+        return redirect('/');
     }
 }
