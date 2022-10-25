@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>ManApp</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'], "defer")
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 </head>
-<body class="bg-gray-100">
-    <nav class="flex justify-between p-6 bg-gradient-to-r from-sky-500 to-indigo-500 border-b-4 border-indigo-500">
+<body class="bg-gray-300">
+    <nav class="nav-1">
         <ul class="flex items-center">
         @guest
             <li><a href="#" class="font-bold px-3 py-5 text-white">{{ env('APP_NAME') }}</a></li>
@@ -40,7 +41,7 @@
         </ul>
     </nav>
     @include('user_menu.left')
-    <div class="inline-block">
+    <div class="md:ml-64">
         @yield('content')
     </div>
     
@@ -73,6 +74,23 @@
                 content.hide()
             }
         }
+
+        function expandmenu(id) {
+            let content = $("#myDrop"+id)
+            if (content.css("display") == "none") {
+                content.show()
+            } else {
+                content.hide()
+            }
+        }
+
+        // function assignId() {
+        //     let value = []
+        //     $("#sidenav-main > a").each(function(){
+        //         value.push($(this).value)
+        //     })
+        //     console.log(value.length)
+        // }
     </script>
 </body>
 </html>
