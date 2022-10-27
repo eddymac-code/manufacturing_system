@@ -4,7 +4,7 @@
     padding: 1.5rem;
     background-image: linear-gradient(to right, #0ea5e9, #6366f1);
     border-bottom: 4px solid #6366f1;
-    overflow: hidden;
+    /* overflow: hidden; */
     position: fixed;
     top: 0;
     width: 100%;

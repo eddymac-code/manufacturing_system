@@ -26,7 +26,7 @@
             @auth
             <li>
                 <button class="font-medium px-5 text-white inline" onclick="dropFunction()">{{ auth()->user()->name }} <i id="ddarrow" class="fa-solid fa-caret-right"></i></button>
-                <div id="ddMenu" class="absolute bg-white text-blue-500 min-w-160 shadow-sm z-10 mt-6 hidden">
+                <div id="ddMenu" class="absolute bg-white text-blue-500 min-w-160 shadow-sm z-auto mt-6 hidden">
                     <a href="" class="ddcontent font-medium py-2 border-b-2 border-blue-500 px-5 block no-underline hover:bg-slate-500 hover:text-white">Profile</a>
                     <a href="" class="ddcontent font-medium py-2 border-b-2 border-blue-500 px-5 block no-underline hover:bg-slate-500 hover:text-white">Settings</a>
                     <a href="{{ route('logout') }}" class="ddcontent font-medium py-2 border-b-2 border-blue-500 px-5 block no-underline hover:bg-slate-500 hover:text-white" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -60,17 +60,19 @@
             }
         }
 
-        function expand() {
-            let arrow = $(".menu-arrow")
-            let content = $(".content-menu")
+        function expand(id, arrow) {
+            let content = $("#"+id)
+            let caret = $(`#${arrow}`).children("i").eq(1).attr("class").split(' ')[0] /* gets first class of the second i element which is 
+            among children of element with id ${arrow} */
+            let sel_arrow = $(`#${arrow} .${caret}`) // Enables only selection of current element's caret
 
             if (content.css("display") == "none") {
-                arrow.removeClass("fa-caret-right")
-                arrow.addClass("fa-caret-down")
+                sel_arrow.removeClass("fa-caret-right")
+                sel_arrow.addClass("fa-caret-down")
                 content.show()
             } else {
-                arrow.removeClass("fa-caret-down")
-                arrow.addClass("fa-caret-right")
+                sel_arrow.removeClass("fa-caret-down")
+                sel_arrow.addClass("fa-caret-right")
                 content.hide()
             }
         }
@@ -84,13 +86,33 @@
             }
         }
 
-        // function assignId() {
-        //     let value = []
-        //     $("#sidenav-main > a").each(function(){
-        //         value.push($(this).value)
-        //     })
-        //     console.log(value.length)
-        // }
+        function assignId() {
+            let count = 0;
+            $("#sidenav-main > div.content-menu").each(function(){
+                $(this).attr('id', 'main-nav-div-'+count)
+                count++
+            })
+
+            $("#sidenav-main > a.expandable").each(function(){
+                $(this).attr('id', 'main-nav-expandable-a-'+count)
+                count++
+            })
+
+            /* here, div and a elements which are children of #sidenav-main with
+            classes of content-menu and expandable respectively are assigned unique ids
+            */
+        }
+
+        //$(document).ready(assignId);
+        window.onload = function(){
+            assignId() // assigns unique ids to elements therein
+        }
+
+        function expandNavMenu(elem) {
+            let id = $(elem).next("div").attr('id')
+            let arrow = $(elem).attr('id')
+            expand(id, arrow)
+        }
     </script>
 </body>
 </html>
