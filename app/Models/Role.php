@@ -21,11 +21,11 @@ class Role extends Model
     
     public function permissions()
     {
-        return $this->hasMany(Permission::class);
+        return $this->belongsToMany(Permission::class);
     }
 
-    public function assignPermission(Permission $permission)
+    public function assignPermission($permission)
     {
-        return $this->permissions()->save($permission);
+        return $this->permissions()->sync($permission);
     }
 }

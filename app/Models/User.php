@@ -43,19 +43,25 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function role()
+    public function roles()
     {
-        return $this->hasOne(Role::class);
+        return $this->belongsToMany(Role::class);
     }
     
     public function assignRole($role)
     {
-        return $this->role()->save($role);
+        return $this->roles()->sync($role);
     }
 
     public function hasRole($name)
     {
-        return $this->role->slug === str()->snake($name);
+        $roles = $this->roles;
+
+        foreach ($roles as $role) {
+            return $role->slug === str()->snake($name);
+        }
+        
+        return false;
     }
     
     public function hasPermissionTo($name)

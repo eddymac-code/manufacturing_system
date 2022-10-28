@@ -37,7 +37,17 @@
                                 <td>{{ ++$i; }}</td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
-                                <td>{{ $user->role ?? 'No role assigned yet' }}</td>
+                                <td>
+                                    @if (!$user->roles->count())
+                                        No roles assigned yet
+                                    @else
+                                        <ol>
+                                            @foreach ($user->roles as $role)
+                                                <li>{{ $role->name }}</li>
+                                            @endforeach
+                                        </ol>
+                                    @endif
+                                </td>
                                 <td>
                                     <i class="fa-solid fa-bars drop-button" onclick="expandmenu(<?php echo $user->id; ?>)"></i>
                                     <div id="<?php echo "myDrop".$user->id; ?>" class="dropdown-content">

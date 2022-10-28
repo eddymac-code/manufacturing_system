@@ -114,11 +114,10 @@ class UserController extends Controller
         ]);
         
         $assignable = User::find($show_user);
-        dd($assignable->role);
         $role_id = $request->role_id;
 
-        $role = Role::find($role_id);
+        $assignable->assignRole($role_id);
 
-        $assignable->assignRole($role);
+        return redirect()->route('users')->with('success', 'Assigned role successfully');
     }
 }

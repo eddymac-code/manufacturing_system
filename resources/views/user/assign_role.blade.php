@@ -13,7 +13,7 @@
                         <label for="role"></label>
                         <select name="role_id" id="role_id" class="w-full border-2 py-3 px-5 my-3 rounded-lg bg-gray-100 @error('role_id')
                         border-red-500 @enderror">
-                            <option value="0">-- Select --</option>
+                            <option value="">-- Select --</option>
                             @foreach ($roles as $key)
                                 <option value="{{ $key->id }}">{{ $key->name }}</option>
                             @endforeach
