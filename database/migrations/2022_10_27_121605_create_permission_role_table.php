@@ -14,8 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('permission_role', function (Blueprint $table) {
-            $table->foreignId('permission_id')->constrained()->onDelete('cascade');
-            $table->foreignId('role_id')->constrained()->onDelete('cascade');
+            $table->integer('permission_id')->unsigned();
+            $table->integer('role_id')->unsigned();
+
+            $table->foreign('permission_id')->references('id')->on('permissions')->onDelete('cascade');
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
 
             $table->primary(['permission_id', 'role_id']);
         });

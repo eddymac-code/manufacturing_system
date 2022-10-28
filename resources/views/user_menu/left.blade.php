@@ -10,8 +10,8 @@
     <a href="#"><i class="fa-solid fa-book"></i> Reports <i class="fa-solid fa-caret-right"></i></a>
     <a class="expandable" href="#" onclick="expandNavMenu(this)"><i class="fa-solid fa-users"></i> Users <i class="menu-arrow fa-solid fa-caret-right"></i></a>
     <div class="content-menu">
-        <a href="">Go</a>
-        <a href="">Go</a>
-        <a href="">Go</a>
+        <a href="{{ route('users') }}">Show Users</a>
+        <a href="{{ route('roles') }}">Roles</a>
+        <a href="{{ route('permissions') }}">Permissions</a>
     </div>
 </div>

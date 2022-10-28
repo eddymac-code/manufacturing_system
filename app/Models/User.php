@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role_id'
     ];
 
     /**
@@ -44,32 +45,27 @@ class User extends Authenticatable
 
     public function role()
     {
-        return $this->belongsTo(Role::class);
+        return $this->hasOne(Role::class);
     }
     
-    public function hasRole($role)
+    public function assignRole($role)
     {
-        return $this->role->contains('name', $role);
+        return $this->role()->save($role);
+    }
 
-        # For multiple roles implementation...
-
-        // Either
-
-        // foreach ($role as $r) {
-        //     if ($this->hasRole($r->name)) {
-        //         return true;
-        //     }
-        // }
-
-        // or
-
-        // return !! $role->intersect($this->roles)->count();
-
-        /* 
-        intersect method allows us to remove any items from the $role collection
-        that aren't present in it's argument ($this->role)
-        */
-
+    public function hasRole($name)
+    {
+        return $this->role->slug === str()->snake($name);
+    }
+    
+    public function hasPermissionTo($name)
+    {
+        $permissions = $this->role->permissions;
+        
+        foreach ($permissions as $permission) {
+            return $permission->slug === str()->snake($name);
+        }
+        
         return false;
     }
 }
