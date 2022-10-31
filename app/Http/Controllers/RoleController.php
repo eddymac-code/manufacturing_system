@@ -3,10 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Role;
+use App\Models\Permission;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth']);
+    }
+    
     public function index()
     {
         $roles = Role::all();
@@ -33,6 +39,13 @@ class RoleController extends Controller
         $role->save();
 
         return redirect()->route('roles')->with('success', 'Role Successfully added.');
+    }
+
+    public function show(Role $role)
+    {
+        return view('user.role.show', [
+            'role' => $role
+        ]);
     }
 
     public function edit(Role $role)
@@ -67,5 +80,43 @@ class RoleController extends Controller
         $role->delete();
 
         return back()->with('success', 'Role successfully deleted');
+    }
+
+    public function assign_permissions_index(Role $role)
+    {
+        $permissions = [];
+
+        $p = Permission::all();
+
+        foreach ($p as $key) {
+            array_push($permissions, $key);
+        }
+
+        // dd($permissions);
+        return view('user.role.assign_permission', [
+            'role' => $role,
+            'permissions' => $permissions
+        ]);
+    }
+
+    public function assign_permissions_store(Request $request, Role $role)
+    {
+        $this->validate($request, [
+            'permission_id' => 'required'
+        ]);
+
+        // dd($request->permission_id);
+        $role->assignPermission($request->permission_id);
+
+        return redirect()->route('show-role', $role->id)->with('success', "Permissions assigned successfully");
+    }
+
+    public function remove_permission(Request $request, $id)
+    {
+        $role = Role::find($request->role_id);
+        
+        $role->dropPermission($id);
+
+        return back()->with('success', 'Permission detached successfully.');
     }
 }

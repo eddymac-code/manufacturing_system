@@ -20,8 +20,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'password',
-        'role_id'
+        'password'
     ];
 
     /**
@@ -53,6 +52,11 @@ class User extends Authenticatable
         return $this->roles()->sync($role);
     }
 
+    public function dropRole($role)
+    {
+        return $this->roles()->detach($role);
+    }
+
     public function hasRole($name)
     {
         $roles = $this->roles;
@@ -66,12 +70,24 @@ class User extends Authenticatable
     
     public function hasPermissionTo($name)
     {
-        $permissions = $this->role->permissions;
+        // $permissions = $this->role->permissions;
         
-        foreach ($permissions as $permission) {
-            return $permission->slug === str()->snake($name);
+        // foreach ($permissions as $permission) {
+        //     return $permission->slug === str()->snake($name);
+        // }
+        
+        // return false;
+
+        $roles = $this->roles;
+
+        foreach ($roles as $role) {
+            foreach ($role->permissions as $permission) {
+                return $permission->slug === str()->snake($name);
+            }
+
+            return false;
         }
-        
+
         return false;
     }
 }

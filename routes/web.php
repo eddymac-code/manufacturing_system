@@ -62,6 +62,9 @@ Route::group(['prefix' => 'user/role'], function () {
         Route::patch('edit/{role}', 'update');
         Route::get('show/{role}', 'show')->name('show-role');
         Route::delete('delete/{role}', 'destroy')->name('delete-role');
+        Route::get('{role}/assign-permission', 'assign_permissions_index')->name('assign_permissions');
+        Route::post('{role}/assign-permission', 'assign_permissions_store');
+        Route::post('remove-permission/{id}', 'remove_permission')->name('detach-permission');
     });
 });
 

@@ -26,6 +26,16 @@ class Role extends Model
 
     public function assignPermission($permission)
     {
+        // if (is_array($permission)) {
+        //     foreach ($permission as $key => $value) {
+        //         $this->permissions()->sync($value);
+        //     }
+        // }
         return $this->permissions()->sync($permission);
+    }
+
+    public function dropPermission($permission)
+    {
+        return $this->permissions()->detach($permission);
     }
 }

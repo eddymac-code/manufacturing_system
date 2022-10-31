@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class PermissionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth']);
+    }
+    
     public function index()
     {
         $permissions = Permission::paginate(5);
@@ -32,7 +37,7 @@ class PermissionController extends Controller
         $permission->slug = str()->snake($permission->name);
         $permission->save();
 
-        return back()->with('success', 'Permission Successfully added.');
+        return redirect()->route('permissions')->with('success', 'Permission Successfully added.');
     }
 
     public function edit(Permission $permission)
@@ -58,7 +63,7 @@ class PermissionController extends Controller
             'slug' => str()->snake($request->name)
         ]);
 
-        return back()->with('success', 'Permission successfully updated.');
+        return redirect()->route('permissions')->with('success', 'Permission successfully updated.');
 
     }
 
