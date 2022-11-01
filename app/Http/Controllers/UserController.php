@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Hashing\BcryptHasher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -34,7 +36,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('user.create');
     }
 
     /**
@@ -45,7 +47,22 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|max:255',
+            'email' => 'required|email:rfc',
+            'dob' => 'date',
+            'password' => 'required|min:8',
+        ]);
+
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->address = $request->address ?? "None Specified";
+        $user->dob = $request->dob;
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return redirect()->route('users')->with('success', 'User saved successfully');
     }
 
     /**
@@ -56,6 +73,7 @@ class UserController extends Controller
      */
     public function show($user)
     {
+        
         $show_user = User::find($user);
 
         return view('user.show', [

@@ -70,19 +70,16 @@ class User extends Authenticatable
     
     public function hasPermissionTo($name)
     {
-        // $permissions = $this->role->permissions;
-        
-        // foreach ($permissions as $permission) {
-        //     return $permission->slug === str()->snake($name);
-        // }
-        
-        // return false;
-
         $roles = $this->roles;
 
         foreach ($roles as $role) {
-            foreach ($role->permissions as $permission) {
-                return $permission->slug === str()->snake($name);
+
+            if ($role->permissions->count()) {
+                foreach ($role->permissions as $permission) {
+                    if ($permission->slug === str()->snake($name)) {
+                        return true;
+                    }   
+                }
             }
 
             return false;
