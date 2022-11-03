@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BranchController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PermissionController;
 
@@ -35,6 +36,15 @@ Route::group(['prefix' => 'branch'], function () {
     Route::get('{id}/edit', [BranchController::class, 'edit'])->name('edit-branch');
     Route::patch('{id}/edit', [BranchController::class, 'update']);
     Route::delete('{id}/delete', [BranchController::class, 'destroy'])->name('delete-branch');
+});
+
+// Routtes for clients
+Route::group(['prefix' => 'client'], function () {
+    Route::controller(ClientController::class, function () {
+        Route::get('data', 'index')->name('clients');
+        Route::get('create', 'create')->name('create-client');
+        Route::post('create', 'store');
+    });
 });
 
 //Routes for users
