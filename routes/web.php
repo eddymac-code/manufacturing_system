@@ -40,10 +40,14 @@ Route::group(['prefix' => 'branch'], function () {
 
 // Routtes for clients
 Route::group(['prefix' => 'client'], function () {
-    Route::controller(ClientController::class, function () {
+    Route::controller(ClientController::class)->group(function () {
         Route::get('data', 'index')->name('clients');
         Route::get('create', 'create')->name('create-client');
         Route::post('create', 'store');
+        Route::get('edit/{client}, edit')->name('edit-client');
+        Route::patch('edit/{client}', 'update');
+        Route::get('show/{client}', 'show')->name('show-client');
+        Route::delete('delete/{client}', 'destroy')->name('delete-client');
     });
 });
 

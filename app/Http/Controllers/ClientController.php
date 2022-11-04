@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -27,7 +28,31 @@ class ClientController extends Controller
      */
     public function create()
     {
-        return view('client.create');
+        if (!auth()->user()->hasPermissionTo('Create Users')) {
+            $message = "Permission Denied. Contact System Administrator";
+            return redirect()->back()->with('warning', $message);
+        }
+
+        $max = Client::max('id');
+        if ($max != '') {
+            $max = Client::findOrFail($max);
+            $max = $max->unique_no;
+        } else {
+            $max = "000";
+        }
+
+        $unique = intval(preg_replace("/[^0-9]/", "", $max));
+        $unique = "MN".(sprintf('%03s', $unique+1));
+        $users = User::all();
+        $user = [];
+        foreach ($users as $key) {
+            $user[$key->id] = $key->name;
+        }
+
+        return view('client.create', [
+            'user' => $user,
+            'unique' => $unique
+        ]);
     }
 
     /**

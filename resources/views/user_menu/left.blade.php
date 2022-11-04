@@ -9,7 +9,15 @@
             <a href="{{ route('create-branch') }}">Add Branch</a>
         @endif
     </div> <!-- Here -->
-    <a href="#"><i class="fa-solid fa-people-group"></i> Clients <i class="fa-solid fa-caret-right"></i></a>
+    <a class="expandable" href="#" onclick="expandNavMenu(this)"><i class="fa-solid fa-people-group"></i> Clients <i class="menu-arrow fa-solid fa-caret-right"></i></a>
+        <div class="content-menu">
+            @if (auth()->user()->hasPermissionTo('View Clients'))
+                <a href="{{ route('clients') }}">Show Clients</a>
+            @endif
+            @if (auth()->user()->hasPermissionTo('Create Clients'))
+                <a href="{{ route('create-client') }}">Add Client</a>
+            @endif
+        </div>
     <a class="expandable" href="#" onclick="expandNavMenu(this)"><i class="fa-solid fa-cash-register"></i> Sales <i class="menu-arrow fa-solid fa-caret-right"></i></a>
     <div class="content-menu">
         @if (auth()->user()->hasPermissionTo('View Sales'))
