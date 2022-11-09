@@ -41,10 +41,10 @@
                                 <td>{{ $client->first_name }} {{ $client->last_name }}</td>
                                 <td>{{ $client->unique_no }}</td>
                                 <td>{{ $client->mobile }}</td>
-                                <td>{{ $user->email }}</td>
+                                <td>{{ $client->email }}</td>
                                 <td>
-                                    <i class="fa-solid fa-bars drop-button" onclick="expandmenu(<?php echo $user->id; ?>)"></i>
-                                    <div id="<?php echo "myDrop".$user->id; ?>" class="dropdown-content">
+                                    <i class="fa-solid fa-bars drop-button" onclick="expandmenu(<?php echo $client->id; ?>)"></i>
+                                    <div id="<?php echo "myDrop".$client->id; ?>" class="dropdown-content">
                                         @if (auth()->user()->hasPermissionTo('View Clients'))
                                             <a href="{{ route('show-client', $client) }}">View</a>
                                         @endif

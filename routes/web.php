@@ -44,7 +44,7 @@ Route::group(['prefix' => 'client'], function () {
         Route::get('data', 'index')->name('clients');
         Route::get('create', 'create')->name('create-client');
         Route::post('create', 'store');
-        Route::get('edit/{client}, edit')->name('edit-client');
+        Route::get('edit/{client}', 'edit')->name('edit-client');
         Route::patch('edit/{client}', 'update');
         Route::get('show/{client}', 'show')->name('show-client');
         Route::delete('delete/{client}', 'destroy')->name('delete-client');

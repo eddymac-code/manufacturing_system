@@ -1,4 +1,4 @@
-<div class="sidenav-1" id="sidenav-main">
+<div class="sidenav-1 font-bold" id="sidenav-main">
     <a href="{{ route('dashboard') }}"><i class="fa-solid fa-computer"></i> Dashboard <i class="fa-solid fa-caret-right"></i></a>
     <a class="expandable" href="#" onclick="expandNavMenu(this)"><i class="fa-solid fa-building"></i> Branches <i class="menu-arrow fa-solid fa-caret-right"></i></a>
     <div class="content-menu">
