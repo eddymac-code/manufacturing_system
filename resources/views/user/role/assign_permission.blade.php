@@ -31,14 +31,20 @@
                             @csrf
                             <div class="w-full p-1">
                                 @foreach ($permissions as $permission)
-                                <div class="flex justify-between">
+                                <div class="flex justify-between mb-6">
                                     <div class="flex justify-start w-6/12">
-                                        <label for="permission_id"> {{ $permission->name }}</label>
+                                        <label for="permission_id">@if ($permission->parent_id == 0)
+                                            <strong> {{ $permission->name }}</strong>
+                                        @else
+                                            __ {{ $permission->name }}
+                                        @endif</label>
                                     </div>
                                     <div class="flex justify-start w-6/12">
-                                        <input type="checkbox" name="permission_id[]" id="" value="{{ $permission->id }}"><br>
+                                        <input type="checkbox" name="permission_id[]" id="" class=""
+                                        value="{{ $permission->id }}" @if($role->permissions->contains($permission->id)) checked @endif><br>
                                     </div>
-                                </div> 
+                                </div>
+                                <hr> 
                                 @endforeach
                             </div>
                             <div class="w-full p-1 flex justify-end">
