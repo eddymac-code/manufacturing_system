@@ -20,6 +20,7 @@
                         <tr>
                             <th>#</th>
                             <th>Name</th>
+                            <th>About</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -27,13 +28,14 @@
                         <?php $i=0; ?>
                         @if ($branches->isEmpty())
                             <tr>
-                                <td colspan="3" class="text-center">No data available from table</td>
+                                <td colspan="4" class="text-center">No data available from table</td>
                             </tr>
                         @else
                         @foreach ($branches as $branch)
                             <tr>
                                 <td>{{ ++$i; }}</td>
                                 <td>{{ $branch->name }}</td>
+                                <td>{{ $branch->description }}</td>
                                 <td>
                                     <i class="fa-solid fa-bars drop-button" onclick="expandmenu(<?php echo $branch->id; ?>)"></i>
                                     <div id="<?php echo "myDrop".$branch->id; ?>" class="dropdown-content">

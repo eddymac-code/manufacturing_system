@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -19,6 +20,13 @@ use App\Http\Controllers\PermissionController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/clear-cache', function () {
+    Artisan::call('cache:clear');
+    Artisan::call('view:clear');
+    Artisan::call('config:clear');
+    return redirect('/');
+
+});
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -26,6 +34,11 @@ Route::get('/', [HomeController::class, 'login'])->name('home');
 Route::post('/', [HomeController::class, 'processLogin']);
 
 Route::post('/logout', [HomeController::class, 'logout'])->name('logout');
+
+Route::get('no_branch', function(){
+    $error = "You do not have requisite permissions for this. Please contact the administrator.";
+    return view('no_branch', ['error' => $error]);
+})->name('no-branch');
 
 // Routes for branches
 Route::group(['prefix' => 'branch'], function () {
@@ -36,6 +49,10 @@ Route::group(['prefix' => 'branch'], function () {
     Route::get('{id}/edit', [BranchController::class, 'edit'])->name('edit-branch');
     Route::patch('{id}/edit', [BranchController::class, 'update']);
     Route::delete('{id}/delete', [BranchController::class, 'destroy'])->name('delete-branch');
+    Route::get('change', [BranchController::class, 'change'])->name('switch-branch');
+    Route::post('change', [BranchController::class, 'persistChange']);
+    Route::post('{id}/add_user', [BranchController::class, 'addUser'])->name('add-branch-user');
+    Route::post('{id}/remove_user', [BranchController::class, 'removeUser'])->name('remove-branch-user');
 });
 
 // Routtes for clients
