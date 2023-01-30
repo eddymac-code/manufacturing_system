@@ -40,4 +40,10 @@
             <a href="{{ route('permissions') }}">Permissions</a>
         @endif
     </div>
+    <a class="expandable" href="#" onclick="expandNavMenu(this)"><i class="fa-solid fa-gear"></i> Settings <i class="menu-arrow fa-solid fa-caret-right"></i></a>
+    <div class="content-menu">
+        @if (auth()->user()->hasPermissionTo('View Settings'))
+            <a href="{{ route('show-settings') }}">Show Settings</a>
+        @endif
+    </div>
 </div>

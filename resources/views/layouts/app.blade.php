@@ -15,10 +15,11 @@
             <li><a href="#" class="font-bold px-3 py-5 text-white">{{ env('APP_NAME') }}</a></li>
         @endguest
         @auth
-            <li><a href="" class="font-medium px-3 py-5 text-white">Home</a></li>
-            <li><a href="" class="font-medium px-3 py-5 text-white">Contacts</a></li>
-            <li><a href="" class="font-medium px-3 py-5 text-white">About</a></li>
-            <li><a href="" class="font-medium px-3 py-5 text-white">Others</a></li> 
+        <li>
+            <a href="#" class="font-bold px-3 py-5 text-white">
+            {{ \App\Models\Setting::where('setting_key', 'company_name')->first()->setting_value }}
+            </a>
+        </li>
         @endauth
         </ul>
 

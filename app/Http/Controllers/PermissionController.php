@@ -47,7 +47,7 @@ class PermissionController extends Controller
 
         $permission = new Permission();
         $permission->name = $request->name;
-        $permission->parent_id = $request->parent_id;
+        $permission->parent_id = $request->type == 0 ? "0" : $request->parent_id;
         $permission->description = $request->description;
         $permission->slug = str()->snake($request->name);
         // str_slug($request->name, '_');

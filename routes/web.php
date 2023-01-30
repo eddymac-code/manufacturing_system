@@ -7,6 +7,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PermissionController;
 
@@ -109,5 +110,13 @@ Route::group(['prefix' => 'user/permission'], function () {
         Route::patch('edit/{permission}', 'update');
         Route::get('show/{permission}', 'show')->name('show-permission');
         Route::delete('delete/{permission}', 'destroy')->name('delete-permission');
+    });
+});
+
+//Routes for settings
+Route::group(['prefix' => 'settings'], function () {
+    Route::controller(SettingController::class)->group(function () {
+        Route::get('data', 'index')->name('show-settings');
+        Route::put('update', 'update')->name('update-settings');
     });
 });
