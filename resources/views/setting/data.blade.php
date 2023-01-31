@@ -196,7 +196,7 @@
                             <div class="shrink-0">
                                 <img class="h-16 w-16 object-cover rounded-full" 
                                 src="{{ asset('storage/images/'.\App\Models\Setting::where('setting_key', 'company_logo')->first()->setting_value) }}" 
-                                alt="Current profile photo" />
+                                alt="Current company logo" />
                             </div>
     
                             @error('company_logo')

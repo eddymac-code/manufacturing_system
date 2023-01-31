@@ -10,6 +10,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\ProductCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,6 +67,19 @@ Route::group(['prefix' => 'client'], function () {
         Route::patch('edit/{client}', 'update');
         Route::get('show/{client}', 'show')->name('show-client');
         Route::delete('delete/{client}', 'destroy')->name('delete-client');
+    });
+});
+
+//Routes for product catregories
+Route::group(['prefix' => 'product_category'], function () {
+    Route::controller(ProductCategoryController::class)->group(function () {
+        Route::get('data', 'index')->name('categories');
+        Route::get('create', 'create')->name('create-category');
+        Route::post('create', 'store');
+        Route::get('edit/{category}', 'edit')->name('edit-category');
+        Route::put('edit/{category}', 'update');
+        Route::get('show/{category:name}', 'show')->name('show-category');
+        Route::delete('delete/{category}', 'destroy')->name('delete-category');
     });
 });
 
