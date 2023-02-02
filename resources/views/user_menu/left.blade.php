@@ -20,6 +20,12 @@
     </div>
     <a class="expandable" href="#" onclick="expandNavMenu(this)"><i class="fa-solid fa-gopuram"></i> Products <i class="menu-arrow fa-solid fa-caret-right"></i></a>
     <div class="content-menu">
+        @if (auth()->user()->hasPermissionTo('View Products'))
+            <a href="{{ route('products') }}">Products</a>
+        @endif
+        @if (auth()->user()->hasPermissionTo('Create Products'))
+            <a href="{{ route('create-product') }}">Add Product</a>
+        @endif
         @if (auth()->user()->hasPermissionTo('View Product Categories'))
             <a href="{{ route('categories') }}">Product Categories</a>
         @endif

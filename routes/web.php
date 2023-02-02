@@ -7,6 +7,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PermissionController;
@@ -70,7 +71,7 @@ Route::group(['prefix' => 'client'], function () {
     });
 });
 
-//Routes for product catregories
+//Routes for product categories
 Route::group(['prefix' => 'product_category'], function () {
     Route::controller(ProductCategoryController::class)->group(function () {
         Route::get('data', 'index')->name('categories');
@@ -80,6 +81,19 @@ Route::group(['prefix' => 'product_category'], function () {
         Route::put('edit/{category}', 'update');
         Route::get('show/{category:name}', 'show')->name('show-category');
         Route::delete('delete/{category}', 'destroy')->name('delete-category');
+    });
+});
+
+//Routes for products
+Route::group(['prefix' => 'product'], function () {
+    Route::controller(ProductController::class)->group(function () {
+        Route::get('data', 'index')->name('products');
+        Route::get('create', 'create')->name('create-product');
+        Route::post('create', 'store');
+        Route::get('edit/{product}', 'edit')->name('edit-product');
+        Route::put('edit/{product}', 'update');
+        Route::get('show/{product:name}', 'show')->name('show-product');
+        Route::delete('delete/{product}', 'destroy')->name('delete-product');
     });
 });
 

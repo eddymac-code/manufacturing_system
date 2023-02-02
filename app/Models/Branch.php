@@ -18,4 +18,14 @@ class Branch extends Model
     {
         return $this->hasMany(BranchUser::class);
     }
+
+    public function productCategories()
+    {
+        return $this->hasMany(ProductCategory::class);
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

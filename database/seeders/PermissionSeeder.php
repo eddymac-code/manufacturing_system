@@ -36,7 +36,18 @@ class PermissionSeeder extends Seeder
         (17, 16, 'View Users', 'view_users', 'View All Users'),
         (18, 16, 'Create Users', 'create_users', 'Create New Users'),
         (19, 16, 'Edit Users', 'edit_users', 'Edit Users'),
-        (20, 16, 'Delete Users', 'delete_users', 'Delete Users');";
+        (20, 16, 'Delete Users', 'delete_users', 'Delete Users'),
+        (21, 0, 'Settings', 'settings', 'Access Settings Module'),
+        (22, 21, 'View Settings', 'view_settings', 'View All Settings'),
+        (23, 0, 'Products', 'products', 'Access Products Module'),
+        (24, 23, 'Create Products', 'create_products', 'Create New Products'),
+        (25, 23, 'View Products', 'view_products', 'View Products'),
+        (26, 23, 'Edit Products', 'edit_products', 'Edit Products'),
+        (27, 23, 'Delete Products', 'delete_products', 'Delete Products'),
+        (28, 23, 'Create Product Categories', 'create_product_categories', 'Create New Product Categories'),
+        (29, 23, 'View Product Categories', 'view_product_categories', 'View Product Categories'),
+        (30, 23, 'Edit Product Categories', 'edit_product_categories', 'Edit Product Categories'),
+        (31, 23, 'Delete Product Categories', 'delete_product_categories', 'Delete Product Categories');";
 
         DB::unprepared($query);
     }
