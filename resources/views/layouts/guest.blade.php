@@ -11,7 +11,11 @@
     <div class="flex justify-between p-6 bg-gradient-to-r from-sky-500 to-indigo-500 border-b-4 border-indigo-500">
         <ul class="flex items-center">
         @guest
-            <li><a href="#" class="font-bold px-3 py-5 text-white">{{ env('APP_NAME') }}</a></li>
+            <li>
+                <a href="#" class="font-bold px-3 py-5 text-white">
+                {{ \App\Models\Setting::where('setting_key', 'company_name')->first()->setting_value }}
+                </a>
+            </li>
         @endguest
         </ul>
     </div>    

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('business_location')->nullable();
             $table->string('business_landmark')->nullable();
             $table->string('id_number')->nullable();
+            $table->integer('branch_id');
         });
     }
 
@@ -28,7 +29,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('clients', function (Blueprint $table) {
-            $table->dropColumn(['business_location', 'business_landmark','id_number']);
+            $table->dropColumn(['business_location', 'business_landmark','id_number','branch_id']);
         });
     }
 };

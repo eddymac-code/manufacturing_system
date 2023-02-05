@@ -21,6 +21,18 @@
                             </div>
                         @enderror
                     </div>
+                    <div class="w-full p-1">
+                        <label for="description" class="sr-only">Description</label>
+                        <textarea name="description" id="description" rows="3" 
+                        class="w-full border-2 py-3 px-5 my-3 rounded-lg bg-gray-100 @error('description')
+                        border-red-500 @enderror">{{ old('description') }}</textarea>
+
+                        @error('description')
+                            <div class="text-red-500 mt-2 text-sm">
+                                {{ $message }}
+                            </div>
+                        @enderror
+                    </div>
                     <button type="submit" class="px-4 py-3 bg-blue-600 text-white rounded-lg">Add Branch</button>
                 </form>
             </div>

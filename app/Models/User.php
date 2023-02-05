@@ -92,4 +92,14 @@ class User extends Authenticatable
 
         return false;
     }
+
+    public function categories()
+    {
+        return $this->hasMany(ProductCategory::class);
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

@@ -9,21 +9,34 @@ class PermissionController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth']);
+        $this->middleware(['auth', 'branch']);
     }
     
     public function index()
     {
-        $permissions = Permission::paginate(5);
+        $data = [];
+        $permissions = Permission::where('parent_id', 0)->get();
+        foreach ($permissions as $permission) {
+            array_push($data, $permission);
+            $subs = Permission::where('parent_id', $permission->id)->get();
+            foreach ($subs as $sub) {
+                array_push($data, $sub);
+            }
+        }
 
         return view('user.permission.data', [
-            'permissions' => $permissions
+            'data' => $data
         ]);
     }
 
     public function create()
     {
-        return view('user.permission.create');
+        $parent_permission = Permission::where('parent_id', 0)->get();
+        
+        
+        return view('user.permission.create', [
+            'parent_permission' => $parent_permission
+        ]);
     }
 
     public function store(Request $request)
@@ -34,7 +47,10 @@ class PermissionController extends Controller
 
         $permission = new Permission();
         $permission->name = $request->name;
-        $permission->slug = str()->snake($permission->name);
+        $permission->parent_id = $request->type == 0 ? "0" : $request->parent_id;
+        $permission->description = $request->description;
+        $permission->slug = str()->snake($request->name);
+        // str_slug($request->name, '_');
         $permission->save();
 
         return redirect()->route('permissions')->with('success', 'Permission Successfully added.');
@@ -42,8 +58,17 @@ class PermissionController extends Controller
 
     public function edit(Permission $permission)
     {
+        $parent_permission = Permission::where('parent_id', 0)->get();
+        
+        if ($permission->parent_id == 0) {
+            $selected = 0;
+        } else {
+            $selected = 1;
+        }
         return view ('user.permission.edit', [
-            'permission' => $permission
+            'permission' => $permission,
+            'parent_permission' => $parent_permission,
+            'selected' => $selected
         ]);
     }
 
@@ -60,6 +85,8 @@ class PermissionController extends Controller
 
         $permission->update([
             'name' => $request->name,
+            'parent_id' => $request->parent_id,
+            'description' => $request->description,
             'slug' => str()->snake($request->name)
         ]);
 

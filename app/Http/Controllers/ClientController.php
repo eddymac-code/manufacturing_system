@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Storage;
 
 class ClientController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'branch']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -71,6 +75,7 @@ class ClientController extends Controller
         ]);
 
         $data = $request->all();
+        $data['branch_id'] = session('branch_id');
         if ($request->hasFile('photo')) {
             $destination_path = 'public/images/clients/photos';
             $photo = $request->file('photo');

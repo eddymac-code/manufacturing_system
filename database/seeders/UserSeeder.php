@@ -21,5 +21,15 @@ class UserSeeder extends Seeder
             'email' => 'admin@manuapp.test',
             'password' => Hash::make('123456')
         ]);
+
+        DB::table('branches')->insert([
+            'name' => 'Default',
+            'description' => 'The default branch'
+        ]);
+
+        DB::table('branch_users')->insert([
+            'branch_id' => 1,
+            'user_id' => 1
+        ]);
     }
 }

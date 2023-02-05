@@ -21,21 +21,23 @@
                             <th>#</th>
                             <th>Name</th>
                             <th>Slug</th>
+                            <th>Description</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php $i=0; ?>
-                        @if (!$permissions->count())
+                        @if (count($data)== 0)
                             <tr>
-                                <td colspan="4" class="text-center">No data available from table</td>
+                                <td colspan="5" class="text-center">No data available from table</td>
                             </tr>
                         @else
-                        @foreach ($permissions as $permission)
+                        @foreach ($data as $permission)
                             <tr>
                                 <td>{{ ++$i; }}</td>
                                 <td>{{ $permission->name }}</td>
                                 <td>{{ $permission->slug }}</td>
+                                <td>{{ $permission->description }}</td>
                                 <td>
                                     <i class="fa-solid fa-bars drop-button" onclick="expandmenu(<?php echo $permission->id; ?>)"></i>
                                     <div id="<?php echo "myDrop".$permission->id; ?>" class="dropdown-content">
@@ -54,7 +56,7 @@
                         
                     </tbody>
                 </table>
-                {{ $permissions->links() }}
+                {{-- {{ $permissions->links() }} --}}
             </div>
         </div>
     </div>

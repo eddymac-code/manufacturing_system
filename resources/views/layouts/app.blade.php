@@ -8,22 +8,28 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 </head>
-<body class="bg-gray-300">
+<body class="bg-slate-900 text-gray-300">
     <nav class="nav-1">
         <ul class="flex items-center">
         @guest
             <li><a href="#" class="font-bold px-3 py-5 text-white">{{ env('APP_NAME') }}</a></li>
         @endguest
         @auth
-            <li><a href="" class="font-medium px-3 py-5 text-white">Home</a></li>
-            <li><a href="" class="font-medium px-3 py-5 text-white">Contacts</a></li>
-            <li><a href="" class="font-medium px-3 py-5 text-white">About</a></li>
-            <li><a href="" class="font-medium px-3 py-5 text-white">Others</a></li> 
+        <li>
+            <a href="#" class="font-bold px-3 py-5 text-white">
+            {{ \App\Models\Setting::where('setting_key', 'company_name')->first()->setting_value }}
+            </a>
+        </li>
         @endauth
         </ul>
 
         <ul class="flex items-center">
             @auth
+            <li>
+                <a href="{{ route('switch-branch') }}" class="font-medium px-3 py-5 text-white">
+                Current Branch: {{ \App\Models\Branch::find(session('branch_id'))->name }}
+                </a>
+            </li>
             <li>
                 <button class="font-medium px-5 text-white inline" onclick="dropFunction()">{{ auth()->user()->name }} <i id="ddarrow" class="fa-solid fa-caret-right"></i></button>
                 <div id="ddMenu" class="absolute bg-white text-blue-500 min-w-160 shadow-sm z-auto mt-6 hidden">
